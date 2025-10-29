@@ -2,7 +2,10 @@
 
 #include "framework/includes.h"
 #include "framework/framework.h"
-
+#include "graphics/mesh.h"
+#include "graphics/material.h"
+#include "graphics/shader.h"
+#include "graphics/texture.h"
 class Camera;
 
 class Entity {
@@ -30,4 +33,30 @@ public:
 	// Some useful methods
 	Matrix44 getGlobalMatrix();
 	float distance(Entity* e);
+};
+
+
+class EntityMesh : public Entity {
+
+public:
+	EntityMesh() {}; 			// Constructor
+
+	EntityMesh(Mesh *m,Material mat) {
+		mesh = m;
+		*material = mat;
+
+	}; 			// Constructor
+	virtual ~EntityMesh() {}; 	// Destructor
+	// Attributes of the derived class  
+	Mesh* mesh = nullptr;
+
+	Texture* texture = nullptr;
+	bool isInstanced = false;
+	// Check your framework material class!
+	Material* material = nullptr;
+	std::vector<Matrix44> models; // For instanced rendering
+
+	// Methods overwritten from base class
+	void render(Camera* camera);
+	void update(float elapsed_time);
 };
