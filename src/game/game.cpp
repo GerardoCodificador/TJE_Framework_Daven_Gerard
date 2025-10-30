@@ -9,8 +9,10 @@
 #include "framework/scene_parser.h"
 
 #include <cmath>
+#include "framework/pulse.h"
 
 //some globals
+
 Mesh* mesh = NULL;
 Texture* texture = NULL;
 Shader* shader = NULL;
@@ -69,7 +71,6 @@ void Game::render(void)
 
 	// Set the camera as default
 	camera->enable();
-
 	// Set flags
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
@@ -98,7 +99,13 @@ void Game::render(void)
 void Game::update(double seconds_elapsed)
 {
 	float speed = seconds_elapsed * mouse_speed; //the speed is defined by the seconds_elapsed so it goes constant
-
+	if (pulse.active) {
+		pulse.radius += seconds_elapsed;
+		if (pulse.radius > 10) {
+			pulse.radius = 0;
+			pulse.active = false;
+		}
+	}
 	// Example
 	angle += (float)seconds_elapsed * 10.0f;
 
@@ -115,6 +122,11 @@ void Game::update(double seconds_elapsed)
 	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) camera->move(Vector3(0.0f, 0.0f,-1.0f) * speed);
 	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) camera->move(Vector3(1.0f, 0.0f, 0.0f) * speed);
 	if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) camera->move(Vector3(-1.0f,0.0f, 0.0f) * speed);
+	if (Input::isKeyPressed(SDL_SCANCODE_SPACE)){
+		pulse.active=true;
+
+		pulse.center = camera->eye;
+	}
 }
 
 //Keyboard event handler (sync input)

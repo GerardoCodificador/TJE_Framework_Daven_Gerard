@@ -1,6 +1,6 @@
 #include "entity.h"
 #include "framework/camera.h"
-
+#include "framework/pulse.h"
 #include <algorithm>
 
 void Entity::render(Camera* camera)
@@ -87,7 +87,7 @@ void EntityMesh::render(Camera* camera) {
 	}
 
 	if(!material->shader){
-		material->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/flat.fs");
+		material->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/pulse.fs");
 	}
 
 	Shader* shader = material->shader;
@@ -100,7 +100,12 @@ void EntityMesh::render(Camera* camera) {
 	shader->enable();
 	shader->setUniform("u_model", model);
 	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
-	shader->setUniform4("u_color", vec4(1, 1, 1, 1));
+	shader->setUniform3("u_color", vec3(1, 1, 1));
+	shader->setUniform3("u_pulse_color", pulse.color);
+	shader->setUniform("u_pulse_width",pulse.width);
+	shader->setUniform3("u_pulse_center", pulse.center);
+	shader->setUniform("u_pulse_radius", pulse.radius);
+	shader->setUniform("u_pulse_active", pulse.active);
 
 
 	// Render the mesh using the active shader

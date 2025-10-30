@@ -14,7 +14,6 @@ varying vec3 v_world_position;
 varying vec3 v_normal;
 varying vec2 v_uv;
 varying vec4 v_color;
-
 void main()
 {	
 	//calcule the normal in camera space (the NormalMatrix is like ViewMatrix but without traslation)

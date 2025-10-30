@@ -6,6 +6,7 @@
 #include "graphics/material.h"
 #include "graphics/shader.h"
 #include "graphics/texture.h"
+
 class Camera;
 
 class Entity {
