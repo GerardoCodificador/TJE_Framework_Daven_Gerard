@@ -87,7 +87,7 @@ void EntityMesh::render(Camera* camera) {
 	}
 
 	if(!material->shader){
-		material->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/basic.fs");
+		material->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/flat.fs");
 	}
 
 	Shader* shader = material->shader;
@@ -100,7 +100,7 @@ void EntityMesh::render(Camera* camera) {
 	shader->enable();
 	shader->setUniform("u_model", model);
 	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
-	shader->setTexture("u_texture", texture, 0);
+	shader->setUniform4("u_color", vec4(1, 1, 1, 1));
 
 
 	// Render the mesh using the active shader

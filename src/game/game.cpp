@@ -15,7 +15,7 @@ Mesh* mesh = NULL;
 Texture* texture = NULL;
 Shader* shader = NULL;
 float angle = 0;
-float mouse_speed = 100.0f;
+float mouse_speed = 1.0f;
 Entity* root = nullptr;
 Game* Game::instance = NULL;
 EntityMesh* ent=nullptr;
@@ -50,6 +50,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// Example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
+	root = new Entity();
 	SceneParser parser;
 	parser.parse("data/myscene.scene", root);
 	
@@ -74,28 +75,14 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	root->render(camera);
 	// Create model matrix for cube
 	Matrix44 m;
 	m.rotate(angle*DEG2RAD, Vector3(0.0f, 1.0f, 0.0f));
 
 	if(shader)
 	{
-		// Enable shader
-		shader->enable();
 
-		// Upload uniforms
-		shader->setUniform("u_color", Vector4(1,1,1,1));
-		shader->setUniform("u_viewprojection", camera->viewprojection_matrix );
-		shader->setUniform("u_texture", texture, 0);
-		shader->setUniform("u_model", m);
-		shader->setUniform("u_time", time);
-
-		// Do the draw call
-		mesh->render( GL_TRIANGLES );
-
-		// Disable shader
-		shader->disable();
+		root->render(camera);
 	}
 
 	// Draw the floor grid
