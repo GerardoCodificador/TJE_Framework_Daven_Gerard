@@ -6,6 +6,7 @@
 #include "graphics/shader.h"
 #include "framework/input.h"
 #include "framework/entities/entity.h"
+#include "framework/scene_parser.h"
 
 #include <cmath>
 
@@ -49,8 +50,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// Example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
-	//SceneParser parser;
-	//parser.parse("data/scenes/scene.txt", &root);
+	SceneParser parser;
+	parser.parse("data/myscene.scene", root);
 	
 	// Hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
@@ -72,7 +73,8 @@ void Game::render(void)
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
-	//root->render(camera);
+
+	root->render(camera);
 	// Create model matrix for cube
 	Matrix44 m;
 	m.rotate(angle*DEG2RAD, Vector3(0.0f, 1.0f, 0.0f));

@@ -13,7 +13,9 @@ class Entity {
 public:
 
 	Entity() {}; 			// Constructor
-	virtual ~Entity() {}; 	// Destructor
+	virtual ~Entity() {
+
+	}; 	// Destructor
 
 	std::string name;
 
@@ -43,7 +45,7 @@ public:
 
 	EntityMesh(Mesh *m,Material mat) {
 		mesh = m;
-		*material = mat;
+		material = new Material(mat);
 
 	}; 			// Constructor
 	virtual ~EntityMesh() {}; 	// Destructor
