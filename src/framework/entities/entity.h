@@ -55,6 +55,7 @@ public:
 
 	Texture* texture = nullptr;
 	bool isInstanced = false;
+	bool culling = true;
 	// Check your framework material class!
 	Material* material = nullptr;
 	std::vector<Matrix44> models; // For instanced rendering

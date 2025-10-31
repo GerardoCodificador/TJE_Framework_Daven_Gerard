@@ -21,6 +21,7 @@ float mouse_speed = 1.0f;
 Entity* root = nullptr;
 Game* Game::instance = NULL;
 EntityMesh* ent=nullptr;
+EntityMesh* skybox = nullptr;
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
 	this->window_width = window_width;
@@ -55,7 +56,15 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	root = new Entity();
 	SceneParser parser;
 	parser.parse("data/myscene.scene", root);
-	
+	Texture* cubetexture = new Texture();
+	{
+		cubetexture->loadCubemap("landscape", { "data/shaders/skybox/px.png","data/shaders/skybox/nx.png","data/shaders/skybox/ny.png","data/shaders/skybox/py.png","data/shaders/skybox/pz.png","data/shaders/skybox/nz.png" });
+	}
+	Material cubeMat;
+	cubeMat.shader = Shader::Get("data/shaders/basic.vs", "data/shaders/boxtexture.fs");
+	cubeMat.diffuse = cubetexture;
+	skybox = new EntityMesh(Mesh::Get("data/meshes/cubemap.ASE"), cubeMat);
+	skybox->culling = false;
 	// Hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 }
@@ -82,6 +91,9 @@ void Game::render(void)
 
 	if(shader)
 	{
+		// Enable the shader
+		
+		skybox->render(camera);
 
 		root->render(camera);
 	}

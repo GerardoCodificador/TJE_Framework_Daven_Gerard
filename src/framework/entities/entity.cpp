@@ -90,6 +90,8 @@ void EntityMesh::render(Camera* camera) {
 		material->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/pulse.fs");
 	}
 
+
+
 	Shader* shader = material->shader;
 	// Set OpenGL flags
 	glDisable(GL_BLEND);
@@ -101,12 +103,16 @@ void EntityMesh::render(Camera* camera) {
 	shader->setUniform("u_model", model);
 	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
 	shader->setUniform3("u_color", vec3(1, 1, 1));
-	shader->setUniform3("u_pulse_color", pulse.color);
+	shader->setUniform("u_pulse_color", pulse.color);
 	shader->setUniform("u_pulse_width",pulse.width);
 	shader->setUniform3("u_pulse_center", pulse.center);
 	shader->setUniform("u_pulse_radius", pulse.radius);
 	shader->setUniform("u_pulse_active", pulse.active);
+	if(material->diffuse)shader->setTexture("u_texture", material->diffuse, 0);
 
+
+	// Render the mesh using the active shader
+	mesh->render(GL_TRIANGLES);
 
 	// Render the mesh using the active shader
 	mesh->render(GL_TRIANGLES);

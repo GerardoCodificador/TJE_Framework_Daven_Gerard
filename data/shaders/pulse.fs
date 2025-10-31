@@ -1,5 +1,4 @@
 
-
 float sdSphere( vec3 p, float s ) {
 	return length(p)-s;
 }
@@ -20,7 +19,7 @@ uniform float u_pulse_radius;
 uniform int u_pulse_active;
 
 uniform mat4 u_inv_vp_mat;
-attribute vec3 v_world_position;
+varying vec3 v_world_position;
 void main()
 {
 
