@@ -1,4 +1,5 @@
 
+
 float sdSphere( vec3 p, float s ) {
 	return length(p)-s;
 }
@@ -11,14 +12,13 @@ float when_gt(float left_side, float right_side) {
 
 }
 
-uniform vec3 u_color;
+uniform vec4 u_color;
 uniform vec3 u_pulse_color;
 uniform float u_pulse_width;
 uniform vec3 u_pulse_center;
 uniform float u_pulse_radius;
 uniform int u_pulse_active;
 
-uniform mat4 u_inv_vp_mat;
 varying vec3 v_world_position;
 void main()
 {
@@ -36,8 +36,8 @@ void main()
 		mix_ratio = clamp(mix_ratio, 0.0, 1.0);
 	}
 	if(u_pulse_active==1)
-			gl_FragColor=vec4(mix(u_color,u_pulse_color,mix_ratio),1.0);
+			gl_FragColor=mix(u_color,vec4(u_pulse_color,1.0),mix_ratio);
 		
-	else gl_FragColor=vec4(u_color,1.0);
+	else gl_FragColor=u_color;
 
 }

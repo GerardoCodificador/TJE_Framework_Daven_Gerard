@@ -102,7 +102,7 @@ void EntityMesh::render(Camera* camera) {
 	shader->enable();
 	shader->setUniform("u_model", model);
 	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
-	shader->setUniform3("u_color", vec3(1, 1, 1));
+	shader->setUniform("u_color", material->color);
 	shader->setUniform("u_pulse_color", pulse.color);
 	shader->setUniform("u_pulse_width",pulse.width);
 	shader->setUniform3("u_pulse_center", pulse.center);

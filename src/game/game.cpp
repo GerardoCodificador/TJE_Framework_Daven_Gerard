@@ -63,7 +63,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	Material cubeMat;
 	cubeMat.shader = Shader::Get("data/shaders/basic.vs", "data/shaders/boxtexture.fs");
 	cubeMat.diffuse = cubetexture;
-	skybox = new EntityMesh(Mesh::Get("data/meshes/cubemap.ASE"), cubeMat);
+	skybox = new EntityMesh(Mesh::Get("data/meshes/box.ASE"), cubeMat);
 	skybox->culling = false;
 	// Hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
